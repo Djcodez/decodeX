@@ -1,0 +1,17 @@
+import java.util.Scanner;
+public class Asscending_order {
+
+	public static void main(String[] args) {
+		Scanner sc= new Scanner(System.in);
+		System.out.println("Enter 3 no.s: ");
+		int x= sc.nextInt();
+		int y= sc.nextInt();
+		int z= sc.nextInt();
+		int maxx= Math.max(x, Math.max(y,z));
+		int minn= Math.min(x,Math.min(y, z));
+		int midd= x+y+z-maxx-minn;
+		System.out.println("In ASCENDING ORDER: "+minn+"; "+midd+"; "+maxx);
+
+	}
+
+}
