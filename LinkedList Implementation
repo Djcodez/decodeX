@@ -1,0 +1,46 @@
+import java.util.*;
+public class LinkdList{
+    Node head;
+    class Node{
+        String data;
+        Node next;
+
+        Node(String data){
+            this.data = data;
+            this.next = null;
+        }
+    }
+    public void AddElement(String data){
+        Node newNode = new Node(data);
+        if(head == null){
+            head = newNode;
+            return;
+        }
+        
+        newNode.next = head;
+        head = newNode;
+    }
+    public void print(){
+        if(head == null){
+            System.out.println("Null");
+            return;
+        }
+
+        Node currNode = head;
+        while(currNode!=null){
+            System.out.print(currNode.data+"  ->  ");
+            currNode = currNode.next;
+        }
+        System.out.println("Null");
+    }
+
+    public static void main(String []args){
+        Scanner sc = new Scanner(System.in);
+        LinkdList l1 = new LinkdList();
+        l1.AddElement("c");
+        l1.AddElement("b");
+        l1.AddElement("a");
+        l1.print();
+    }
+
+}
