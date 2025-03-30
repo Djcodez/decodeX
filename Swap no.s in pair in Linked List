@@ -1,0 +1,83 @@
+class LinkedListSwap {
+    Node head;
+
+    // Node class
+    class Node {
+        int data;
+        Node next;
+
+        Node(int data) {
+            this.data = data;
+            this.next = null;
+        }
+    }
+
+    // Add element at the end
+    public void addLast(int data) {
+        Node newNode = new Node(data);
+        if (head == null) {
+            head = newNode;
+            return;
+        }
+        Node currNode = head;
+        while (currNode.next != null) {
+            currNode = currNode.next;
+        }
+        currNode.next = newNode;
+    }
+
+    // Swap every two adjacent nodes
+    public Node swapPairs(Node head) {
+        if (head == null || head.next == null) {
+            return head; // No swap needed if list is empty or has only one node
+        }
+
+        Node dummy = new Node(0); // Dummy node to handle edge cases
+        dummy.next = head;
+        Node prev = dummy;
+
+        while (prev.next != null && prev.next.next != null) {
+            Node first = prev.next;
+            Node second = prev.next.next;
+
+            // Swapping nodes
+            first.next = second.next;
+            second.next = first;
+            prev.next = second;
+
+            // Move to the next pair
+            prev = first;
+        }
+
+        return dummy.next; // Return the new head
+    }
+
+    // Print the linked list
+    public void print() {
+        Node currNode = head;
+        while (currNode != null) {
+            System.out.print(currNode.data + " -> ");
+            currNode = currNode.next;
+        }
+        System.out.println("Null");
+    }
+
+    public static void main(String[] args) {
+        LinkedListSwap list = new LinkedListSwap();
+
+        // Add elements to the linked list
+        list.addLast(1);
+        list.addLast(2);
+        list.addLast(3);
+        list.addLast(4);
+
+        System.out.println("Original Linked List:");
+        list.print();
+
+        // Swap pairs and update head
+        list.head = list.swapPairs(list.head);
+
+        System.out.println("Linked List after swapping adjacent nodes:");
+        list.print();
+    }
+}
