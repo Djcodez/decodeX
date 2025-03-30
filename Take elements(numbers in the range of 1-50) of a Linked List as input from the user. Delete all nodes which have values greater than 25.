@@ -1,0 +1,89 @@
+import java.util.*;
+
+public class LinkedListFilter {
+    Node head;
+
+    // Node class
+    class Node {
+        int data;
+        Node next;
+
+        Node(int data) {
+            this.data = data;
+            this.next = null;
+        }
+    }
+
+    // Add element at the end
+    public void addLast(int data) {
+        if (data < 1 || data > 50) {
+            System.out.println("Invalid input: " + data + ". Please enter numbers between 1 and 50.");
+            return;
+        }
+
+        Node newNode = new Node(data);
+        if (head == null) {
+            head = newNode;
+            return;
+        }
+
+        Node currNode = head;
+        while (currNode.next != null) {
+            currNode = currNode.next;
+        }
+        currNode.next = newNode;
+    }
+
+    // Print the linked list
+    public void print() {
+        if (head == null) {
+            System.out.println("List is empty.");
+            return;
+        }
+
+        Node currNode = head;
+        while (currNode != null) {
+            System.out.print(currNode.data + " -> ");
+            currNode = currNode.next;
+        }
+        System.out.println("Null");
+    }
+
+    // Delete nodes with values > 25
+    public void deleteGreaterThan25() {
+        while (head != null && head.data > 25) { // If head needs to be deleted
+            head = head.next;
+        }
+
+        Node currNode = head;
+        while (currNode != null && currNode.next != null) {
+            if (currNode.next.data > 25) {
+                currNode.next = currNode.next.next; // Skip the node
+            } else {
+                currNode = currNode.next; // Move forward
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        LinkedListFilter list = new LinkedListFilter();
+
+        System.out.println("Enter numbers between 1-50 (Enter -1 to stop):");
+        while (true) {
+            int num = sc.nextInt();
+            if (num == -1) break; // Stop input on -1
+            list.addLast(num);
+        }
+
+        System.out.println("\nOriginal Linked List:");
+        list.print();
+
+        list.deleteGreaterThan25();
+
+        System.out.println("\nModified Linked List (Values > 25 removed):");
+        list.print();
+
+        sc.close();
+    }
+}
