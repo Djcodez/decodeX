@@ -1,0 +1,92 @@
+class LinkedListReverseSublist {
+    Node head;
+
+    // Node class
+    class Node {
+        int data;
+        Node next;
+
+        Node(int data) {
+            this.data = data;
+            this.next = null;
+        }
+    }
+
+    // Add element at the end
+    public void addLast(int data) {
+        Node newNode = new Node(data);
+        if (head == null) {
+            head = newNode;
+            return;
+        }
+        Node currNode = head;
+        while (currNode.next != null) {
+            currNode = currNode.next;
+        }
+        currNode.next = newNode;
+    }
+
+    // Reverse a sublist from position 'left' to 'right'
+    public Node reverseBetween(Node head, int left, int right) {
+        if (head == null || left == right) {
+            return head; // No reversal needed if list is empty or left == right
+        }
+
+        Node dummy = new Node(0); // Dummy node to handle edge cases
+        dummy.next = head;
+        Node prev = dummy;
+
+        // Move prev to the node just before 'left'
+        for (int i = 1; i < left; i++) {
+            prev = prev.next;
+        }
+
+        // Start reversing
+        Node curr = prev.next;
+        Node nextNode = null;
+        Node prevNode = null;
+
+        for (int i = left; i <= right; i++) {
+            nextNode = curr.next;
+            curr.next = prevNode;
+            prevNode = curr;
+            curr = nextNode;
+        }
+
+        // Connect reversed section with remaining list
+        prev.next.next = curr;  // Connect last node of reversed part to the remaining list
+        prev.next = prevNode;   // Connect start of reversed part to previous part
+
+        return dummy.next; // Return the new head
+    }
+
+    // Print the linked list
+    public void print() {
+        Node currNode = head;
+        while (currNode != null) {
+            System.out.print(currNode.data + " -> ");
+            currNode = currNode.next;
+        }
+        System.out.println("Null");
+    }
+
+    public static void main(String[] args) {
+        LinkedListReverseSublist list = new LinkedListReverseSublist();
+
+        // Add elements to the linked list
+        list.addLast(1);
+        list.addLast(2);
+        list.addLast(3);
+        list.addLast(4);
+        list.addLast(5);
+
+        System.out.println("Original Linked List:");
+        list.print();
+
+        // Reverse sublist from left = 2 to right = 4
+        list.head = list.reverseBetween(list.head, 2, 4);
+
+        System.out.println("Linked List after reversing from position 2 to 4:");
+        list.print();
+    }
+}
