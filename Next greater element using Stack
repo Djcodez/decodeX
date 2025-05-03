@@ -1,0 +1,35 @@
+// For {4, 5, 2, 25, 7, 8}
+// ➡️ Output: 5 25 25 -1 8 -1
+
+import java.util.*;
+
+class Stackk{
+    public static void NextGreater(int arr[]){
+        int n = arr.length;
+        int result[] = new int[n];
+        Stack <Integer> s = new Stack<>();
+        
+        for(int i = n-1; i>=0; i--){
+            while(!s.isEmpty() && s.peek()<=arr[i]){
+                s.pop();
+            }
+            if(s.isEmpty()){
+                result[i] = -1;
+            }
+            else{
+                result[i] = s.peek();
+            }
+            s.push(arr[i]);
+        }
+        System.out.println("Resulted Array is ");
+        for (int i = 0; i < n; i++) {
+            System.out.print(result[i] + " ");
+        }
+    }
+}
+class Main {
+    public static void main(String[] args) {
+        int arr[] = {4, 5, 2, 25, 7, 8};
+        Stackk.NextGreater(arr);
+    }
+}
